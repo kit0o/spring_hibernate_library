@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<form method="get" th:action="@{/book/doTheSearch(name=${name})}" th:object="${book}">-->
+<!--    <label for="name">Enter the keyword to search:</label>-->
+<!--    <input type="text" th:field="*{name}" id="name"/>-->
+<!--    <br/>-->
+<!--    <input type="submit" value="Search!"/>-->
+<!--</form>-->
+<!--<form th:action="@{/book/doTheSearch(name=${name})}" th:object="${name}" method="get">-->
+<!--        <div>-->
+<!--            Search by Name:-->
+<!--            <input id="filter" type="text" th:field="*{name}" class="form-control input-sm w-auto inline m-r"/>-->
+<!--            <button>Search!</button>-->
+<!--        </div>-->
+<!--</form>-->
+<form th:action="@{/book/doTheSearch}">
+    <input type="text" name="search" id="search" size="50" th:value="${search}" required />
+    &nbsp;
+    <input type="submit" value="Search!"/>
+    <div th:each="book : ${foundBooks}">
+        <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">Book</p>
+        <p th:if="${book.getOwner() eq null}" th:text="${'At the moment, the book is available to take!'}">Availability</p>
+        <p th:unless="${book.getOwner() eq null}"
+           th:text="${'At the moment, the book belongs to: ' + book.getOwner().getName() + ', ' + book.getOwner().getBirthdate()}">Unavailability</p>
+    </div>
+</form>
+<hr/>
+<br/>
+<form th:method="GET" th:action="@{/book}">
+    <input type="submit" value="To the library!"/>
+</form>
+</body>
+</html>
